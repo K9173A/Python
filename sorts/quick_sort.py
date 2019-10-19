@@ -1,22 +1,25 @@
 """
-This is a pure python implementation of the quick sort algorithm
-
-For doctests run following command:
-python -m doctest -v quick_sort.py
-or
-python3 -m doctest -v quick_sort.py
-
-For manual testing run:
-python quick_sort.py
+Сложность:
+1. Худший случай: O(n^2).
+2. Лучший случай: O(n * log n).
+3. Средний случай: O(n * log n).
+Операция разделения массива на две части относительно опорного элемента занимает
+время O(log n). Поскольку все операции разделения, проделываемые на одной глубине
+рекурсии, обрабатывают разные части исходного массива, размер которого постоянен,
+суммарно на каждом уровне рекурсии потребуется также O(n) операций. Следовательно,
+общая сложность алгоритма определяется лишь количеством разделений, то есть
+глубиной рекурсии. Глубина рекурсии, в свою очередь, зависит от сочетания входных
+данных и способа определения опорного элемента.
 """
 
 
 def quick_sort(collection):
-    """Pure implementation of quick sort algorithm in Python
+    """
+    Реализация быстрой сортировки. Рекурсивный вариант.
 
-    :param collection: some mutable ordered collection with heterogeneous
-    comparable items inside
-    :return: the same collection ordered by ascending
+    :param collection: любая изменяемая коллекция с гетерогенными элементами,
+    которые можно сравнивать.
+    :return: коллекция с элементами, расположенными по возрастанию.
 
     Examples:
     >>> quick_sort([0, 5, 3, 2, 2])
@@ -32,16 +35,19 @@ def quick_sort(collection):
     if length <= 1:
         return collection
     else:
-        # Use the last element as the first pivot
+        # В качестве pivot используется последний элемент.
         pivot = collection.pop()
-        # Put elements greater than pivot in greater list
-        # Put elements lesser than pivot in lesser list
+        # lesser - часть коллекции, которая меньше pivot, будет тут.
+        # greater -  части коллекции, которая меньше pivot, будет тут.
         greater, lesser = [], []
         for element in collection:
             if element > pivot:
                 greater.append(element)
             else:
                 lesser.append(element)
+        # Рекурсивно вызывается функция сортировки отдельно для
+        # greater и lesser. В конце все части объединяются в единую
+        # коллекцию. Между ними вставляется pivot.
         return quick_sort(lesser) + [pivot] + quick_sort(greater)
 
 
